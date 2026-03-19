@@ -1,1 +1,2 @@
-export { default } from "./Landing";
+import Landing from "@/pages/Landing";
+export default Landing;
