@@ -3,10 +3,12 @@ import { motion, AnimatePresence } from "framer-motion";
 import { X, Check, Lightbulb, Rocket, MessageSquare, Send, ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 
-const chatMessages = [
-  { role: "ai" as const, text: "I see you chose **x = -2, x = -3** for the equation x² - 5x + 6 = 0. Let me help you understand why that's incorrect." },
-  { role: "ai" as const, text: "When we factor x² - 5x + 6, we need two numbers that **multiply to +6** and **add to -5**. Those numbers are **-2 and -3**." },
-  { role: "ai" as const, text: "So we get (x - 2)(x - 3) = 0, giving us **x = 2** and **x = 3** (positive values!). The sign flip happens because we set each factor equal to zero." },
+type ChatMsg = { role: "ai" | "user"; text: string };
+
+const chatMessages: ChatMsg[] = [
+  { role: "ai", text: "I see you chose x = -2, x = -3 for the equation x² - 5x + 6 = 0. Let me help you understand why that's incorrect." },
+  { role: "ai", text: "When we factor x² - 5x + 6, we need two numbers that multiply to +6 and add to -5. Those numbers are -2 and -3." },
+  { role: "ai", text: "So we get (x - 2)(x - 3) = 0, giving us x = 2 and x = 3 (positive values!). The sign flip happens because we set each factor equal to zero." },
 ];
 
 export default function Feedback() {
