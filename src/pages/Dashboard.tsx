@@ -38,11 +38,13 @@ const container = { hidden: {}, show: { transition: { staggerChildren: 0.08 } } 
 const item = { hidden: { opacity: 0, y: 15 }, show: { opacity: 1, y: 0 } };
 
 export default function Dashboard() {
+  const { userName } = useUser();
+  const displayName = userName || "Learner";
   return (
     <div className="min-h-screen gradient-surface pt-24 pb-12 px-6">
       <div className="max-w-7xl mx-auto">
         <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="mb-8">
-          <h1 className="font-display text-3xl font-bold mb-1">Welcome back, Alex 👋</h1>
+          <h1 className="font-display text-3xl font-bold mb-1">Welcome back, {displayName} 👋</h1>
           <p className="text-muted-foreground">Here's your learning overview for this week.</p>
         </motion.div>
 

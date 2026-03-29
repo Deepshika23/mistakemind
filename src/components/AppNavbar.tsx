@@ -14,11 +14,18 @@ const navItems = [
 
 export function AppNavbar() {
   const location = useLocation();
+  const navigate = useNavigate();
+  const { userName, logout } = useUser();
   const [dark, setDark] = useState(false);
 
   useEffect(() => {
     document.documentElement.classList.toggle("dark", dark);
   }, [dark]);
+
+  const handleLogout = () => {
+    logout();
+    navigate("/");
+  };
 
   return (
     <motion.nav
@@ -61,12 +68,23 @@ export function AppNavbar() {
           })}
         </div>
 
-        <button
-          onClick={() => setDark(!dark)}
-          className="w-9 h-9 rounded-full bg-muted flex items-center justify-center text-muted-foreground hover:text-foreground transition-colors"
-        >
-          {dark ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
-        </button>
+        <div className="flex items-center gap-2">
+          {userName && (
+            <button
+              onClick={handleLogout}
+              className="w-9 h-9 rounded-full bg-muted flex items-center justify-center text-muted-foreground hover:text-foreground transition-colors"
+              title="Logout"
+            >
+              <LogOut className="w-4 h-4" />
+            </button>
+          )}
+          <button
+            onClick={() => setDark(!dark)}
+            className="w-9 h-9 rounded-full bg-muted flex items-center justify-center text-muted-foreground hover:text-foreground transition-colors"
+          >
+            {dark ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+          </button>
+        </div>
       </div>
     </motion.nav>
   );
