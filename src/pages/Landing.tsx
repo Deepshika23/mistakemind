@@ -49,6 +49,27 @@ const item = {
 };
 
 export default function Landing() {
+  const { userName, setUserName } = useUser();
+  const navigate = useNavigate();
+  const [showNameInput, setShowNameInput] = useState(false);
+  const [nameValue, setNameValue] = useState("");
+
+  const handleStartLearning = () => {
+    if (userName) {
+      navigate("/dashboard");
+    } else {
+      setShowNameInput(true);
+    }
+  };
+
+  const handleSubmitName = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (nameValue.trim()) {
+      setUserName(nameValue.trim());
+      navigate("/dashboard");
+    }
+  };
+
   return (
     <div className="gradient-surface min-h-screen">
       {/* Hero */}
