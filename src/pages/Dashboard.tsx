@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { TrendingUp, Target, Flame, Brain, ArrowRight, BookOpen, AlertTriangle } from "lucide-react";
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
 import { Link } from "react-router-dom";
+import { useUser } from "@/contexts/UserContext";
 
 const progressData = [
   { day: "Mon", accuracy: 62 },
