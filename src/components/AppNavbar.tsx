@@ -1,7 +1,8 @@
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Brain, LayoutDashboard, Target, Route, User, Moon, Sun } from "lucide-react";
+import { Brain, LayoutDashboard, Target, Route, User, Moon, Sun, LogOut } from "lucide-react";
 import { useState, useEffect } from "react";
+import { useUser } from "@/contexts/UserContext";
 
 const navItems = [
   { label: "Home", path: "/", icon: Brain },
