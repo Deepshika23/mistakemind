@@ -1,7 +1,9 @@
-import { motion } from "framer-motion";
-import { Link } from "react-router-dom";
+import { motion, AnimatePresence } from "framer-motion";
+import { Link, useNavigate } from "react-router-dom";
 import { ArrowRight, Brain, Lightbulb, TrendingUp, Zap, Target, BarChart3 } from "lucide-react";
 import heroBrain from "@/assets/hero-brain.png";
+import { useUser } from "@/contexts/UserContext";
+import { useState } from "react";
 
 const features = [
   {
@@ -47,6 +49,27 @@ const item = {
 };
 
 export default function Landing() {
+  const { userName, setUserName } = useUser();
+  const navigate = useNavigate();
+  const [showNameInput, setShowNameInput] = useState(false);
+  const [nameValue, setNameValue] = useState("");
+
+  const handleStartLearning = () => {
+    if (userName) {
+      navigate("/dashboard");
+    } else {
+      setShowNameInput(true);
+    }
+  };
+
+  const handleSubmitName = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (nameValue.trim()) {
+      setUserName(nameValue.trim());
+      navigate("/dashboard");
+    }
+  };
+
   return (
     <div className="gradient-surface min-h-screen">
       {/* Hero */}
@@ -74,21 +97,56 @@ export default function Landing() {
             <p className="text-lg text-muted-foreground max-w-xl mb-8">
               MistakeMind analyzes your incorrect answers, provides smart explanations, and creates a personalized learning roadmap so you never repeat the same mistake.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-              <Link
-                to="/practice"
-                className="gradient-bg text-primary-foreground px-8 py-3.5 rounded-full font-semibold text-base flex items-center justify-center gap-2 shadow-glow card-hover"
-              >
-                Start Learning
-                <ArrowRight className="w-4 h-4" />
-              </Link>
-              <Link
-                to="/dashboard"
-                className="bg-card border border-border px-8 py-3.5 rounded-full font-semibold text-base text-foreground flex items-center justify-center gap-2 card-hover"
-              >
-                View Dashboard
-              </Link>
-            </div>
+            <AnimatePresence mode="wait">
+              {showNameInput && !userName ? (
+                <motion.form
+                  key="name-input"
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  onSubmit={handleSubmitName}
+                  className="flex flex-col sm:flex-row gap-3 justify-center lg:justify-start"
+                >
+                  <input
+                    autoFocus
+                    value={nameValue}
+                    onChange={(e) => setNameValue(e.target.value)}
+                    placeholder="Enter your name..."
+                    className="px-6 py-3.5 rounded-full bg-card border border-border text-foreground text-base font-medium focus:outline-none focus:ring-2 focus:ring-primary/50 w-64"
+                  />
+                  <button
+                    type="submit"
+                    disabled={!nameValue.trim()}
+                    className="gradient-bg text-primary-foreground px-8 py-3.5 rounded-full font-semibold text-base flex items-center justify-center gap-2 shadow-glow card-hover disabled:opacity-50"
+                  >
+                    Let's Go
+                    <ArrowRight className="w-4 h-4" />
+                  </button>
+                </motion.form>
+              ) : (
+                <motion.div
+                  key="cta-buttons"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start"
+                >
+                  <button
+                    onClick={handleStartLearning}
+                    className="gradient-bg text-primary-foreground px-8 py-3.5 rounded-full font-semibold text-base flex items-center justify-center gap-2 shadow-glow card-hover"
+                  >
+                    Start Learning
+                    <ArrowRight className="w-4 h-4" />
+                  </button>
+                  <Link
+                    to="/dashboard"
+                    className="bg-card border border-border px-8 py-3.5 rounded-full font-semibold text-base text-foreground flex items-center justify-center gap-2 card-hover"
+                  >
+                    View Dashboard
+                  </Link>
+                </motion.div>
+              )}
+            </AnimatePresence>
           </motion.div>
 
           <motion.div

@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { Trophy, Flame, Star, Target, Zap, BookOpen, Award, TrendingUp } from "lucide-react";
+import { useUser } from "@/contexts/UserContext";
 
 const badges = [
   { name: "First Steps", icon: Star, earned: true, desc: "Complete your first question" },
@@ -28,6 +29,8 @@ const container = { hidden: {}, show: { transition: { staggerChildren: 0.08 } } 
 const item = { hidden: { opacity: 0, y: 15 }, show: { opacity: 1, y: 0 } };
 
 export default function Profile() {
+  const { userName } = useUser();
+  const displayName = userName || "Learner";
   return (
     <div className="min-h-screen gradient-surface pt-24 pb-12 px-6">
       <div className="max-w-5xl mx-auto">
@@ -38,10 +41,10 @@ export default function Profile() {
           className="glass rounded-2xl p-8 flex flex-col sm:flex-row items-center gap-6 mb-8"
         >
           <div className="w-20 h-20 rounded-full gradient-bg flex items-center justify-center text-3xl font-display font-bold text-primary-foreground">
-            A
+            {displayName.charAt(0).toUpperCase()}
           </div>
           <div className="text-center sm:text-left">
-            <h1 className="font-display text-2xl font-bold">Alex Johnson</h1>
+            <h1 className="font-display text-2xl font-bold">{displayName}</h1>
             <p className="text-muted-foreground text-sm">Learning since March 2026 • Level 14</p>
             <div className="flex items-center gap-4 mt-2 justify-center sm:justify-start">
               <span className="flex items-center gap-1 text-sm"><Flame className="w-4 h-4 text-warning" /> 12 day streak</span>
