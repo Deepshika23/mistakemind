@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { Trophy, Flame, Star, Target, Zap, BookOpen, Award, TrendingUp } from "lucide-react";
+import { useUser } from "@/contexts/UserContext";
 
 const badges = [
   { name: "First Steps", icon: Star, earned: true, desc: "Complete your first question" },
